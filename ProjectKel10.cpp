@@ -24,7 +24,27 @@ void tampilMenu(){
 }
 
 void menu1(){
-    
+    cout << "Tambah Kontak" << endl;
+}
+
+void menu2(){
+    cout << "Tampilkan Kontak" << endl;
+}
+
+void menu3(){
+    cout << "Hapus Kontak" << endl;
+}
+
+void menu4(){
+    cout << "Edit Kontak" << endl;
+}
+
+void menu5(){
+    cout << "Cari Kontak" << endl;
+}
+
+void menu6(){
+    cout << "Sorting Kontak" << endl;
 }
 
 
@@ -33,29 +53,39 @@ int main() {
     tail = NULL;
 
     int pilihan;
+    char lanjut;
 
 do {
     tampilMenu();
     cout << "Pilihan: ";
     cin >> pilihan;
+    system("cls");
+
+    if (cin.fail() || pilihan < 1 || pilihan > 7 ) {
+        cin.clear();
+        cin.ignore();
+        cout << "\nMasukkan angka antara 1-7!!\n" << endl;
+        continue;
+    }    
+
     switch (pilihan) {
         case 1:
-            cout << "Tambah Kontak" << endl;
+            menu1();
             break;
         case 2:
-            cout << "Tampilkan Kontak" << endl;
+            menu2();
             break;
         case 3:
-            cout << "Hapus Kontak" << endl;
+            menu3();
             break;
         case 4:
-            cout << "Edit Kontak" << endl;
+            menu4();
             break;
         case 5:
-            cout << "Cari Kontak" << endl;
+            menu5();
             break;
         case 6:
-            cout << "Sorting Kontak" << endl;
+            menu6();
             break;
         case 7:
             cout << "Keluar dari program." << endl;
@@ -64,6 +94,29 @@ do {
         default:
             cout << "Pilihan tidak valid. Silakan coba lagi." << endl;
     }
+
+    if (pilihan == 1 || pilihan == 2 || pilihan == 3 || pilihan == 4 || pilihan == 5 || pilihan == 6) {
+        cout << endl;
+        cout << "Apakah Anda ingin melanjutkan program? (y/t): ";
+        cin >> lanjut;
+        system("cls");
+
+        do {
+            if (lanjut == 'y' || lanjut == 'Y') {
+                system("cls");
+                break;
+            } else if (lanjut == 't' || lanjut == 'T') {
+                cout << "Terima kasih telah menggunakan program ini!" << endl;
+                return 0;
+            } else {
+                cout << "Pilihan tidak tersedia. Silakan masukkan (y/t): ";
+                cin >> lanjut;
+            }
+        } while (true);
+    }
+
+
+
 } while (pilihan != 7);
 
     return 0;
