@@ -5,12 +5,12 @@ struct Kontak{
     char nama[50];
     char noTelp[20];
     
-    Kontak *next;
-    Kontak *prev;
+    Kontak *kanan;
+    Kontak *kiri;
 };
 
-Kontak *head;
-Kontak *tail;
+Kontak *kepala;
+Kontak *ekor;
 
 void tampilMenu(){
     cout << "Menu Kontak" << endl;
@@ -49,8 +49,8 @@ void menu6(){
 
 
 int main() {
-    head = NULL;
-    tail = NULL;
+    kepala = NULL;
+    ekor = NULL;
 
     int pilihan;
     char lanjut;
