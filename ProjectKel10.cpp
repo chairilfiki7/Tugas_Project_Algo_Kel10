@@ -1,16 +1,17 @@
 #include <iostream>
+#include <cstring>
 using namespace std;
 
-struct Kontak{
+struct Node{
     char nama[50];
     char noTelp[20];
     
-    Kontak *kanan;
-    Kontak *kiri;
+    Node *kanan;
+    Node *kiri;
 };
 
-Kontak *kepala;
-Kontak *ekor;
+Node *kepala;
+Node *ekor;
 
 void tampilMenu(){
     cout << "Menu Kontak" << endl;
@@ -23,8 +24,68 @@ void tampilMenu(){
     cout << "7. Keluar" << endl;
 }
 
+void simpanFile() {
+    FILE *tunjuk;
+    tunjuk = fopen("kontak.txt", "wb");
+
+    if (tunjuk == NULL) {
+        cout << "Gagal membuka file kontak.txt!" << endl;
+        return;
+    }
+
+    Node* bantu = kepala;
+
+    while (bantu != NULL) {
+        fwrite(bantu, sizeof(Node), 1, tunjuk);
+
+        bantu = bantu->kanan;
+    }
+
+    fclose(tunjuk);
+}
+
+Node* buatNode(char namaBaru[], char noTelpBaru[]) {
+    Node* nodeBaru = new Node;
+    strcpy(nodeBaru->nama, namaBaru);
+    strcpy(nodeBaru->noTelp, noTelpBaru);
+    
+    nodeBaru->kanan = NULL;
+    nodeBaru->kiri = NULL;
+
+    return nodeBaru;
+}
+
+void tambahBelakang(char namaBaru[], char noTelpBaru[]) {
+    Node* nodeBaru = buatNode(namaBaru, noTelpBaru);
+
+    if (kepala == NULL) {
+        kepala = nodeBaru;
+        ekor = nodeBaru;
+    } else {
+        ekor->kanan = nodeBaru;
+        nodeBaru->kiri = ekor;
+    }    ekor = nodeBaru;
+    
+
+}
+
 void menu1(){
-    cout << "Tambah Kontak" << endl;
+    cout << "=== Tambah Kontak Baru ===" << endl;
+
+    char inputNama[50];
+    char inputNo[20];
+
+    cin.ignore();
+    cout << "Masukkan Nama: ";
+    cin.getline(inputNama, 50);
+    cout << "Masukkan No Telepon: ";
+    cin.getline(inputNo, 20);
+    tambahBelakang(inputNama, inputNo);
+
+    simpanFile();
+
+    cout << "Kontak atas nama " << inputNama << " berhasil ditambahkan!" << endl;
+
 }
 
 void menu2(){
