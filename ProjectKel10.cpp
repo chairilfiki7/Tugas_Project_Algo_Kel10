@@ -288,8 +288,58 @@ void menu5(){
 
 }
 
+void urutkanNode(){
+    if (kepala == NULL || kepala->kanan == NULL) {
+        cout << "Data tidak cukup untuk diurutkan." << endl;
+        return;
+    }
+
+    bool adaPertukaran;
+    Node* bantu;
+
+    do {
+        adaPertukaran = false;
+        bantu = kepala;
+
+        while (bantu->kanan != NULL) {
+            if (strcmp(bantu->nama, bantu->kanan->nama) > 0) {
+                char tempNama[50];
+                strcpy(tempNama, bantu->nama);
+                strcpy(bantu->nama, bantu->kanan->nama);
+                strcpy(bantu->kanan->nama, tempNama);
+
+                char tempTlp[20];
+                strcpy(tempTlp, bantu->noTelp);
+                strcpy(bantu->noTelp, bantu->kanan->noTelp);
+                strcpy(bantu->kanan->noTelp, tempTlp);
+
+                adaPertukaran = true;
+            }
+            bantu = bantu->kanan;
+        }
+    } while (adaPertukaran);
+
+    simpanFile();
+
+    cout << "\n------------------------------" << endl;
+    cout << "Kontak berhasil diurutkan." << endl;
+    cout << "------------------------------\n" << endl;
+}
+
 void menu6(){
-    cout << "Sorting Kontak" << endl;
+    cout << "=== Sorting Kontak ===" << endl;
+    cout << "Data sebelum diurutkan:" << endl;
+    menu2();
+    
+    if (kepala == NULL) {
+        cout << "Belum ada kontak yang tersimpan." << endl;
+        return;
+    }
+
+    urutkanNode();
+
+    cout << "Data setelah diurutkan:" << endl;
+    menu2();
 }
 
 
