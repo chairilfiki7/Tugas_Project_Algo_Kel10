@@ -14,7 +14,7 @@ Node *kepala;
 Node *ekor;
 
 void tampilMenu(){
-    cout << "Menu Kontak" << endl;
+    cout << "=== Menu Kontak ===" << endl;
     cout << "1. Tambah Kontak" << endl;
     cout << "2. Tampilkan Kontak" << endl;
     cout << "3. Hapus Kontak" << endl;
@@ -129,8 +129,67 @@ void menu2(){
     }
 }
 
+void hapusNode(char namaHapus[]) {
+
+    if (kepala == NULL) {
+        cout << "Belum ada kontak yang tersimpan." << endl;
+        return;
+    }
+
+    Node* hapus = kepala;
+    bool ketemu = false;
+
+    while (hapus != NULL) {
+        if (strcmp(hapus->nama, namaHapus) == 0) {
+            ketemu = true;
+            break;
+        }
+        hapus = hapus->kanan;
+    }
+
+    if (!ketemu) {
+        cout << "Kontak dengan nama " << namaHapus << " tidak ditemukan." << endl;
+        return;
+    }
+
+    if (kepala == ekor) {
+        kepala = NULL;
+        ekor = NULL;
+    } else if (hapus == kepala) {
+        kepala = kepala->kanan;
+        kepala->kiri = NULL;
+    } else if (hapus == ekor) {
+        ekor = ekor->kiri;
+        ekor->kanan = NULL;
+    } else {
+        hapus->kiri->kanan = hapus->kanan;
+        hapus->kanan->kiri = hapus->kiri;
+    }
+
+    delete hapus;
+
+    simpanFile();
+
+    cout << "Kontak dengan nama " << namaHapus << " berhasil dihapus." << endl;
+
+}
+
 void menu3(){
-    cout << "Hapus Kontak" << endl;
+    cout << "=== Hapus Kontak ===" << endl;
+
+    if (kepala == NULL) {
+        cout << "Belum ada kontak yang tersimpan." << endl;
+        return;
+    }
+
+    char hapusNama[50];
+    cin.ignore();
+    cout << "Masukkan Nama Kontak yang ingin dihapus: ";
+    cin.getline(hapusNama, 50);
+    
+    hapusNode(hapusNama);
+
+
 }
 
 void menu4(){
