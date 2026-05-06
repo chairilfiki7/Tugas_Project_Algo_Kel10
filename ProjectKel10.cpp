@@ -70,6 +70,23 @@ void tambahBelakang(char namaBaru[], char noTelpBaru[]) {
 
 }
 
+void bacaFile (){
+    FILE *tunjuk;
+    tunjuk = fopen("kontak.dat", "rb");
+
+    if (tunjuk == NULL) {
+        return;
+    }
+
+    Node dataTemp;
+
+    while (fread(&dataTemp, sizeof(Node), 1, tunjuk) == 1) {
+        tambahBelakang(dataTemp.nama, dataTemp.noTelp);
+    }
+
+    fclose(tunjuk);
+}
+
 void menu1(){
     cout << "=== Tambah Kontak Baru ===" << endl;
 
@@ -91,6 +108,25 @@ void menu1(){
 
 void menu2(){
     cout << "=== Tampilkan Kontak ===" << endl;
+
+    if (kepala == NULL) {
+        cout << "Belum ada kontak yang tersimpan." << endl;
+        return;
+        
+    }
+
+    Node* bantu = kepala;
+    int nomer = 1;
+
+    cout << "------------------------------" << endl;
+    while (bantu != NULL) {
+        cout << nomer << ". Nama : " << bantu-> nama << endl;
+        cout << "   No Telepon : " << bantu-> noTelp << endl;
+        cout << "------------------------------" << endl;
+
+        bantu = bantu->kanan;
+        nomer++;
+    }
 }
 
 void menu3(){
@@ -113,6 +149,8 @@ void menu6(){
 int main() {
     kepala = NULL;
     ekor = NULL;
+
+    bacaFile();
 
     int pilihan;
     char lanjut;
