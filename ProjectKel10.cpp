@@ -186,18 +186,106 @@ void menu3(){
     cin.ignore();
     cout << "Masukkan Nama Kontak yang ingin dihapus: ";
     cin.getline(hapusNama, 50);
-    
+
     hapusNode(hapusNama);
 
 
 }
 
+void editNode(char namaEdit[]) {
+
+    Node* bantu = kepala;
+    bool ketemu = false;
+
+    while (bantu != NULL) {
+        if (strcmp(bantu->nama, namaEdit) == 0) {
+            ketemu = true;
+            break;
+        }
+        bantu = bantu->kanan;
+    }
+
+    if (!ketemu) {
+        cout << "Kontak dengan nama " << namaEdit << " tidak ditemukan." << endl;
+        return;
+    }
+
+    char inputNama[50];
+    char inputTlp[20];
+
+    cout << "\nData ditemukan!" << endl;
+    cout << "Nama Lama: " << bantu->nama << endl;
+    cout << "No Telepon Lama: " << bantu->noTelp << endl;
+    cout << "------------------------------" << endl;
+
+    cout << "Masukkan Nama Baru: ";
+    cin.getline(inputNama, 50);
+    cout << "Masukkan No Telepon Baru: ";
+    cin.getline(inputTlp, 20);
+
+    strcpy(bantu->nama, inputNama);
+    strcpy(bantu->noTelp, inputTlp);
+
+    simpanFile();
+    cout << "Kontak berhasil diedit." << endl;
+}
+
 void menu4(){
-    cout << "Edit Kontak" << endl;
+    cout << "=== Edit Kontak ===" << endl;
+
+    if (kepala == NULL) {
+        cout << "Belum ada kontak yang tersimpan." << endl;
+        return;
+    }
+
+    char editNama[50];
+    cin.ignore();
+    cout << "Masukkan Nama Kontak yang ingin diedit: ";
+    cin.getline(editNama, 50);
+
+    editNode(editNama);
+
+}
+
+void cariNode(char namaCari[]) {
+    Node* bantu = kepala;
+    bool ketemu = false;
+
+    while (bantu != NULL) {
+        if (strcmp(bantu->nama, namaCari) == 0) {
+            ketemu = true;
+            break;
+        }
+        bantu = bantu->kanan;
+    }
+
+    if (!ketemu) {
+        cout << "Kontak dengan nama " << namaCari << " tidak ditemukan." << endl;
+        return;
+    }
+
+    cout << "\n=== Data ditemukan ===" << endl;
+    cout << "Nama: " << bantu->nama << endl;
+    cout << "No Telepon: " << bantu->noTelp << endl;
+    cout << "------------------------------" << endl; 
 }
 
 void menu5(){
-    cout << "Cari Kontak" << endl;
+    cout << "=== Cari Kontak ===" << endl;
+
+    if (kepala == NULL) {
+        cout << "Belum ada kontak yang tersimpan." << endl;
+        return;
+    }
+
+    char cariNama[50];
+    cin.ignore();
+    cout << "Masukkan Nama Kontak yang ingin dicari: ";
+    cin.getline(cariNama, 50);
+
+    cariNode(cariNama);
+
+
 }
 
 void menu6(){
@@ -247,7 +335,7 @@ do {
             menu6();
             break;
         case 7:
-            cout << "Keluar dari program." << endl;
+            cout << "Terima kasih telah menggunakan program ini!" << endl;
             return 0;
             break;
         default:
