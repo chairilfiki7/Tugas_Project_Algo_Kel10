@@ -26,10 +26,10 @@ void tampilMenu(){
 
 void simpanFile() {
     FILE *tunjuk;
-    tunjuk = fopen("kontak.txt", "wb");
+    tunjuk = fopen("kontak.dat", "wb");
 
     if (tunjuk == NULL) {
-        cout << "Gagal membuka file kontak.txt!" << endl;
+        cout << "Gagal membuka file kontak.dat!" << endl;
         return;
     }
 
@@ -64,7 +64,8 @@ void tambahBelakang(char namaBaru[], char noTelpBaru[]) {
     } else {
         ekor->kanan = nodeBaru;
         nodeBaru->kiri = ekor;
-    }    ekor = nodeBaru;
+        ekor = nodeBaru;
+    }    
     
 
 }
@@ -89,7 +90,7 @@ void menu1(){
 }
 
 void menu2(){
-    cout << "Tampilkan Kontak" << endl;
+    cout << "=== Tampilkan Kontak ===" << endl;
 }
 
 void menu3(){
